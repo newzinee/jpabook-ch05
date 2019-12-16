@@ -20,7 +20,8 @@ public class Test {
         try {
             tx.begin();
 //            testSave(em);
-            queryLogicJoin(em);
+//            queryLogicJoin(em);
+            updateRelation(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -30,6 +31,16 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 수정
+    private static void updateRelation(EntityManager em) {
+
+        Team team2 = new Team("team2", "팀2");
+        em.persist(team2);
+
+        Member member = em.find(Member.class, "member1");
+        member.setTeam(team2);
     }
 
     // JPQL 조인 사용한 조회

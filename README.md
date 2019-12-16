@@ -3,7 +3,7 @@
 
 #### 참조를 사용하는 객체의 연관관계: 단방향
 
-```java
+```
 member1.setTeam(team1);
 Team findTeam = member1.getTeam();
 ```
@@ -28,4 +28,7 @@ WHERE member.ID = 'member1'
 1. 객체 그래프 탐색(객체를 통해 조회: member.getTeam();)
 2. 객체지향 쿼리 사용(JPQL)
 - sql 조인과 jpql 조인은 문법이 다르다.
-- jpql에서는 `:변수명`로 써서 파라미터를 바인딩 한다.   
+- jpql에서는 `:변수명`로 써서 파라미터를 바인딩 한다.
+
+
+   
