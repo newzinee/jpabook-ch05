@@ -22,3 +22,10 @@ WHERE member.ID = 'member1'
 - 생략하면, name은 필드명(team)+_+참조하는 테이블의 기본키 컬럼명(TEAM_ID)으로 됨. = team_TEAM_ID
 
 @ManyToOne: 다대일(N:1) 관계에서 사용(필수)
+
+--- 
+조회
+1. 객체 그래프 탐색(객체를 통해 조회: member.getTeam();)
+2. 객체지향 쿼리 사용(JPQL)
+- sql 조인과 jpql 조인은 문법이 다르다.
+- jpql에서는 `:변수명`로 써서 파라미터를 바인딩 한다.   
