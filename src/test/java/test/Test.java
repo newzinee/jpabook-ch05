@@ -22,7 +22,8 @@ public class Test {
 //            testSave(em);
 //            queryLogicJoin(em);
 //            updateRelation(em);
-            deleteRelation(em);
+//            deleteRelation(em);
+            biDirection(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -32,6 +33,18 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 양방향 연관관계 설정 후, 조회
+    private static void biDirection(EntityManager em) {
+
+        // team에서 members 조회
+        Team team = em.find(Team.class, "team1");
+        List<Member> members = team.getMembers();
+
+        for(Member member : members) {
+            System.out.println("name: " + member.getUsername());
+        }
     }
 
     // 연관관계 삭제
