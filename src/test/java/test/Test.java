@@ -21,7 +21,8 @@ public class Test {
             tx.begin();
 //            testSave(em);
 //            queryLogicJoin(em);
-            updateRelation(em);
+//            updateRelation(em);
+            deleteRelation(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -31,6 +32,12 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 연관관계 삭제
+    private static void deleteRelation(EntityManager em) {
+        Member member1 = em.find(Member.class,"member1");
+        member1.setTeam(null);  // 연관관계 제거
     }
 
     // 수정

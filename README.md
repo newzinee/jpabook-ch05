@@ -30,5 +30,19 @@ WHERE member.ID = 'member1'
 - sql 조인과 jpql 조인은 문법이 다르다.
 - jpql에서는 `:변수명`로 써서 파라미터를 바인딩 한다.
 
+---
+수정
+
+entity 값 변경
+
+---
+
+연관관계 삭제
+
+연관관계를 삭제하고, 엔티티를 삭제해야 한다.
+```
+member1.setTeam(null);  // 연관관계 삭제
+em.remove(team);        // 엔티티 삭제
+```
 
    
