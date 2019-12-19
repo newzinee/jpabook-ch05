@@ -23,7 +23,8 @@ public class Test {
 //            queryLogicJoin(em);
 //            updateRelation(em);
 //            deleteRelation(em);
-            biDirection(em);
+//            biDirection(em);
+            teamSave(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -33,6 +34,25 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 양방향 연관관계 저장
+    private static void teamSave(EntityManager em) {
+        Team team3 = new Team("team3", "팀3");
+        em.persist(team3);
+
+        Member member3 = new Member("member3", "회원3");
+        member3.setTeam(team3); // 연관관계 설정 Member.team
+        em.persist(member3);
+
+        Member member4 = new Member("member4", "회원4");
+        member4.setTeam(team3); // 연관관계 설정 Member.team
+        em.persist(member4);
+
+        // 연관관계의 주인이 아니기 때문에, DB저장시, 이 코드는 무시된다.
+        Member member5 = new Member("member5", "회원5");
+        em.persist(member5);
+        team3.getMembers().add(member5);
     }
 
     // 양방향 연관관계 설정 후, 조회
