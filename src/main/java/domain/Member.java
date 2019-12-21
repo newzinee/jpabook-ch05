@@ -24,4 +24,13 @@ public class Member {
         setId(id);
         setUsername(username);
     }
+
+    public void setTeam(Team team) {
+        this.team = team;
+
+        // 무한루프에 안 빠지도록 체크
+        if(!team.getMembers().contains(this)) {
+            team.getMembers().add(this);
+        }
+    }
 }

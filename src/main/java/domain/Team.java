@@ -29,4 +29,13 @@ public class Team {
         this.setId(id);
         this.setName(name);
     }
+
+    public void addMember(Member member) {
+        this.members.add(member);
+
+        // 무한루프에 안 빠지도록 체크
+        if(member.getTeam() != this) {
+            member.setTeam(this);
+        }
+    }
 }
