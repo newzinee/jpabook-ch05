@@ -1,12 +1,10 @@
 package test;
 
 import domain.Member;
+import domain.Product;
 import domain.Team;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class Test {
@@ -24,7 +22,8 @@ public class Test {
 //            updateRelation(em);
 //            deleteRelation(em);
 //            biDirection(em);
-            teamSave(em);
+//            teamSave(em);
+            manyToManySave(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -33,6 +32,27 @@ public class Test {
             em.close();
         }
         emf.close();
+
+    }
+
+    // 다대다 단방향 저장(member-product)
+    private static void manyToManySave(EntityManager em) {
+        Product productA = new Product();
+        productA.setId("productA");
+        productA.setName("상품A");
+        em.persist(productA);
+
+        Member member1 = new Member();
+        member1.setId("member1");
+        member1.setUsername("회원1");
+        member1.getProducts().add(productA);    // 연관관계 설정
+        em.persist(member1);
+
+        Member findMember = em.find(Member.class, "member1");
+        List<Product> products = findMember.getProducts();
+        for(Product product : products) {
+            System.out.println("product.name="+product.getName());
+        }
 
     }
 

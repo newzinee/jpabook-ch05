@@ -89,4 +89,20 @@ DB 쪽은 연관관계가 1개, 객체 쪽은 연관관계가 2개이기 때문�
 
 Member(회원)와 Locker(사물함)은 1대1관계
  
-   
+---
+
+다대다(N:N)
+
+관계형 데이터베이스에서는 테이블 2개로 다대다 관계를 표현할 수 없다. 그래서 중간 연견 테이블을 추가해서 일대다, 다대일 관계로 풀어낸다. 
+
+객체는 다대다 관계를 만들 수 있다.
+
+다대다 단방향
+
+MEMBER(회원)과 상품(Product)은 다대다. 중간을 연결해 줄 테이블 MEMBER_PRODUCT
+
+@JoinTable.name : 연결 테이블 지정(MEMBER_PRODUCT)
+
+@JoinTable.joinColumns: 현재 방향인 회원과 매핑할 조인 컬럼 정보 지정(MEMBER_ID)
+
+@JoinTable.inverseJoinColumns: 반대 방향인 상품과 매핑할 조인 컬럼 정보 지정(PRODUCT_ID)  
