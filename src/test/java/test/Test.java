@@ -23,7 +23,8 @@ public class Test {
 //            deleteRelation(em);
 //            biDirection(em);
 //            teamSave(em);
-            manyToManySave(em);
+//            manyToManySave(em);
+            manyToManyFindInverse(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -32,6 +33,16 @@ public class Test {
             em.close();
         }
         emf.close();
+
+    }
+
+    // 다대다 양방향 역방향으로 객체 그래프 탐색
+    private static void manyToManyFindInverse(EntityManager em) {
+        Product product = em.find(Product.class, "productA");
+        List<Member> members = product.getMembers();
+        for(Member member : members) {
+            System.out.println("member = " + member.getUsername());
+        }
 
     }
 
@@ -48,6 +59,21 @@ public class Test {
         member1.getProducts().add(productA);    // 연관관계 설정
         em.persist(member1);
 
+        /*
+        MEMBER_PRODUCT와 PRODUCT 조인
+        select
+            products0_.MEMBER_ID as MEMBER_I1_2_0_,
+            products0_.PRODUCT_ID as PRODUCT_2_2_0_,
+            product1_.PRODUCT_ID as PRODUCT_1_3_1_,
+            product1_.name as name2_3_1_
+        from
+            MEMBER_PRODUCT products0_
+        inner join
+            Product product1_
+                on products0_.PRODUCT_ID=product1_.PRODUCT_ID
+        where
+            products0_.MEMBER_ID=?
+         */
         Member findMember = em.find(Member.class, "member1");
         List<Product> products = findMember.getProducts();
         for(Product product : products) {

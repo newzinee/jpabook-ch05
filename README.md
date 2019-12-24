@@ -106,3 +106,9 @@ MEMBER(회원)과 상품(Product)은 다대다. 중간을 연결해 줄 테이�
 @JoinTable.joinColumns: 현재 방향인 회원과 매핑할 조인 컬럼 정보 지정(MEMBER_ID)
 
 @JoinTable.inverseJoinColumns: 반대 방향인 상품과 매핑할 조인 컬럼 정보 지정(PRODUCT_ID)  
+
+---
+
+다대다 양방향
+
+mappedby 사용, 편의 메소드 (addProduct) 추가 

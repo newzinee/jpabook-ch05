@@ -45,4 +45,10 @@ public class Member {
             team.getMembers().add(this);
         }
     }
+
+    // 다대다 양방향을 위한 편의 메소드
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getMembers().add(this);
+    }
 }
