@@ -1,6 +1,7 @@
 package test;
 
 import domain.Member;
+import domain.MemberProduct;
 import domain.Product;
 import domain.Team;
 
@@ -24,7 +25,8 @@ public class Test {
 //            biDirection(em);
 //            teamSave(em);
 //            manyToManySave(em);
-            manyToManyFindInverse(em);
+//            manyToManyFindInverse(em);
+            saveByCompositeKey(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -36,51 +38,72 @@ public class Test {
 
     }
 
-    // 다대다 양방향 역방향으로 객체 그래프 탐색
-    private static void manyToManyFindInverse(EntityManager em) {
-        Product product = em.find(Product.class, "productA");
-        List<Member> members = product.getMembers();
-        for(Member member : members) {
-            System.out.println("member = " + member.getUsername());
-        }
+    // 복합키를 이용해서 데이터 저장
+    private static void saveByCompositeKey(EntityManager em) {
 
+        // 회원 저장
+        Member member11 = new Member("member111", "회원111");
+        em.persist(member11);
+
+        // 상품 저장
+        Product productAA  = new Product();
+        productAA.setId("productAAA");
+        productAA.setName("상품AAA");
+        em.persist(productAA);
+
+        // 회원상품 저장
+        MemberProduct memberProduct = new MemberProduct();
+        memberProduct.setMember(member11);      // 주문회원 - 연관관계 설정
+        memberProduct.setProduct(productAA);    // 주문상품 - 연관관계 설정
+        memberProduct.setOrderAmount(2);        // 주문수량
+        em.persist(memberProduct);
     }
+
+    // 다대다 양방향 역방향으로 객체 그래프 탐색
+//    private static void manyToManyFindInverse(EntityManager em) {
+//        Product product = em.find(Product.class, "productA");
+//        List<Member> members = product.getMembers();
+//        for(Member member : members) {
+//            System.out.println("member = " + member.getUsername());
+//        }
+//
+//    }
 
     // 다대다 단방향 저장(member-product)
-    private static void manyToManySave(EntityManager em) {
-        Product productA = new Product();
-        productA.setId("productA");
-        productA.setName("상품A");
-        em.persist(productA);
-
-        Member member1 = new Member();
-        member1.setId("member1");
-        member1.setUsername("회원1");
-        member1.getProducts().add(productA);    // 연관관계 설정
-        em.persist(member1);
-
-        /*
-        MEMBER_PRODUCT와 PRODUCT 조인
-        select
-            products0_.MEMBER_ID as MEMBER_I1_2_0_,
-            products0_.PRODUCT_ID as PRODUCT_2_2_0_,
-            product1_.PRODUCT_ID as PRODUCT_1_3_1_,
-            product1_.name as name2_3_1_
-        from
-            MEMBER_PRODUCT products0_
-        inner join
-            Product product1_
-                on products0_.PRODUCT_ID=product1_.PRODUCT_ID
-        where
-            products0_.MEMBER_ID=?
-         */
-        Member findMember = em.find(Member.class, "member1");
-        List<Product> products = findMember.getProducts();
-        for(Product product : products) {
-            System.out.println("product.name="+product.getName());
-        }
-
-    }
+//    private static void manyToManySave(EntityManager em) {
+//        Product productA = new Product();
+//        productA.setId("productA");
+//        productA.setName("상품A");
+//        em.persist(productA);
+//
+//        Member member1 = new Member();
+//        member1.setId("member1");
+//        member1.setUsername("회원1");
+//        member1.getProducts().add(productA);    // 연관관계 설정
+//        em.persist(member1);
+//
+//        /*
+//        MEMBER_PRODUCT와 PRODUCT 조인
+//        select
+//            products0_.MEMBER_ID as MEMBER_I1_2_0_,
+//            products0_.PRODUCT_ID as PRODUCT_2_2_0_,
+//            product1_.PRODUCT_ID as PRODUCT_1_3_1_,
+//            product1_.name as name2_3_1_
+//        from
+//            MEMBER_PRODUCT products0_
+//        inner join
+//            Product product1_
+//                on products0_.PRODUCT_ID=product1_.PRODUCT_ID
+//        where
+//            products0_.MEMBER_ID=?
+//         */
+//        Member findMember = em.find(Member.class, "member1");
+//        List<Product> products = findMember.getProducts();
+//        for(Product product : products) {
+//            System.out.println("product.name="+product.getName());
+//        }
+//
+//    }
 
     // 양방향 연관관계 저장
     private static void teamSave(EntityManager em) {

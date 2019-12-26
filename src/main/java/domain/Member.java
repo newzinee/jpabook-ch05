@@ -26,11 +26,14 @@ public class Member {
     @JoinColumn(name="TEAM_ID")
     private Team team;
 
-    @ManyToMany
-    @JoinTable(name = "MEMBER_PRODUCT",
-                joinColumns = @JoinColumn(name="MEMBER_ID"),
-                inverseJoinColumns = @JoinColumn(name="PRODUCT_ID"))
-    private List<Product> products = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(name = "MEMBER_PRODUCT",
+//                joinColumns = @JoinColumn(name="MEMBER_ID"),
+//                inverseJoinColumns = @JoinColumn(name="PRODUCT_ID"))
+//    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member") // 역방향. MEMBER_PRODUCT 테이블에 새로운 컬럼 추가됨.
+    private List<MemberProduct> memberProducts;
 
     public Member(String id, String username) {
         setId(id);
@@ -47,8 +50,8 @@ public class Member {
     }
 
     // 다대다 양방향을 위한 편의 메소드
-    public void addProduct(Product product) {
-        products.add(product);
-        product.getMembers().add(this);
-    }
+//    public void addProduct(Product product) {
+//        products.add(product);
+//        product.getMembers().add(this);
+//    }
 }
