@@ -1,9 +1,6 @@
 package test;
 
-import domain.Member;
-import domain.MemberProduct;
-import domain.Product;
-import domain.Team;
+import domain.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,7 +23,8 @@ public class Test {
 //            teamSave(em);
 //            manyToManySave(em);
 //            manyToManyFindInverse(em);
-            saveByCompositeKey(em);
+//            saveByCompositeKey(em);
+            findByCompositeKey(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -36,6 +34,24 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 복합키를 이용한 데이터 조회
+    private static void findByCompositeKey(EntityManager em) {
+
+        // 기본키 값 생성
+        MemberProductId memberProductId = new MemberProductId();
+        memberProductId.setMember("member111");
+        memberProductId.setProduct("productAAA");
+
+        MemberProduct memberProduct = em.find(MemberProduct.class, memberProductId);
+
+        Member member = memberProduct.getMember();
+        Product product = memberProduct.getProduct();
+
+        System.out.println("member = " + member.getUsername());
+        System.out.println("product = " + product.getName());
+        System.out.println("orderAccount = " + memberProduct.getOrderAmount());
     }
 
     // 복합키를 이용해서 데이터 저장
