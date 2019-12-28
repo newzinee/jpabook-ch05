@@ -25,7 +25,8 @@ public class Test {
 //            manyToManyFindInverse(em);
 //            saveByCompositeKey(em);
 //            findByCompositeKey(em);
-            saveByAlternateKey(em);
+//            saveByAlternateKey(em);
+            findByAlternateKey(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -37,7 +38,21 @@ public class Test {
 
     }
 
-    // 복합키 대신에 대리키 이용(MEMBER_PRODUCT 테이블 대신 ORDER 테이블 사용)
+    // 복합키 대신에 대리키 이용(MEMBER_PRODUCT 테이블 대신 ORDERS 테이블 사용)
+    private static void findByAlternateKey(EntityManager em) {
+
+        Long orderId = 2L;
+        Order order = em.find(Order.class, orderId);
+
+        Member member = order.getMember();
+        Product product = order.getProduct();
+
+        System.out.println("member = " + member.getUsername());
+        System.out.println("product = " + product.getName());
+        System.out.println("orderAmount = " + order.getOrderAmount());
+    }
+
+    // 복합키 대신에 대리키 이용(MEMBER_PRODUCT 테이블 대신 ORDERS 테이블 사용)
     private static void saveByAlternateKey(EntityManager em) {
 
         // 회원 저장

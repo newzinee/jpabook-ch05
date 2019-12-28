@@ -135,7 +135,7 @@ mappedby 사용, 편의 메소드 (addProduct) 추가
 
 - 대리키 생성(Long): 간편(복합키 안 만들어도 됨)하고, 비즈니스에 의존하지 않음
 
-원래는 MEMBER_PRODUCT 테이블에 MEMBER_ID, PRODUCT_ID 2개의 복합키를 사용했으나 ORDER 테이블에 ORDER_ID를 기본키로 하는 테이블로 수정. MEMBER_ID, PRODUCT_ID는 외래키로 사용 
+원래는 MEMBER_PRODUCT 테이블에 MEMBER_ID, PRODUCT_ID 2개의 복합키를 사용했으나 ORDERS 테이블에 ORDER_ID를 기본키로 하는 테이블로 수정. MEMBER_ID, PRODUCT_ID는 외래키로 사용 
 
  
 
