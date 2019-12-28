@@ -127,4 +127,17 @@ mappedby 사용, 편의 메소드 (addProduct) 추가
  
 - 복합키는 별도의 식별자 클래스(public)로 만들어야 한다.
 - Serializable을 구현해야 한다.
-- 기본생성자, equals, hashCode 메소드를 구현해야 한다.  
+- 기본생성자, equals, hashCode 메소드를 구현해야 한다. 
+
+---
+
+복합키를 사용하지 않고 하기. 
+
+- 대리키 생성(Long): 간편(복합키 안 만들어도 됨)하고, 비즈니스에 의존하지 않음
+
+원래는 MEMBER_PRODUCT 테이블에 MEMBER_ID, PRODUCT_ID 2개의 복합키를 사용했으나 ORDER 테이블에 ORDER_ID를 기본키로 하는 테이블로 수정. MEMBER_ID, PRODUCT_ID는 외래키로 사용 
+
+ 
+
+
+   

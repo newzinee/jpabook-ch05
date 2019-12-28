@@ -24,7 +24,8 @@ public class Test {
 //            manyToManySave(em);
 //            manyToManyFindInverse(em);
 //            saveByCompositeKey(em);
-            findByCompositeKey(em);
+//            findByCompositeKey(em);
+            saveByAlternateKey(em);
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
@@ -34,6 +35,25 @@ public class Test {
         }
         emf.close();
 
+    }
+
+    // 복합키 대신에 대리키 이용(MEMBER_PRODUCT 테이블 대신 ORDER 테이블 사용)
+    private static void saveByAlternateKey(EntityManager em) {
+
+        // 회원 저장
+        Member member = new Member("member12", "회원12");
+        em.persist(member);
+
+        // 상품 저장
+        Product product = new Product("productAB", "상품AB");
+        em.persist(product);
+
+        // 주문 저장
+        Order order = new Order();
+        order.setMember(member);
+        order.setProduct(product);
+        order.setOrderAmount(3);
+        em.persist(order);
     }
 
     // 복합키를 이용한 데이터 조회
